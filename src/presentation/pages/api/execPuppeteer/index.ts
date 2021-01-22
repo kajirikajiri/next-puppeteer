@@ -10,7 +10,7 @@ export const index =(req, res) => {
       serviceAccount = require('../8889eb754138.json');
     }
     console.log(1, serviceAccount)
-    if (!admin.apps.length) {
+    if (!admin?.apps?.length) {
       admin.initializeApp({
         credential: admin.credential.cert(serviceAccount)
       });
