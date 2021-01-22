@@ -3,16 +3,20 @@ import admin from 'firebase-admin'
 
 export const index =(req, res) => {
   let serviceAccount
-  if (process.env.NODE_ENV === 'production') {
-    serviceAccount = JSON.parse(process.env.SERVICE_ACCOUNT)
-  } else if (process.env.NODE_ENV === 'development') {
-    serviceAccount = require('../8889eb754138.json');
-  }
-  console.log(serviceAccount)
-  if (!admin.apps.length) {
-    admin.initializeApp({
-      credential: admin.credential.cert(serviceAccount)
-    });
+  try {
+    if (process.env.NODE_ENV === 'production') {
+      serviceAccount = JSON.parse(process.env.SERVICE_ACCOUNT)
+    } else if (process.env.NODE_ENV === 'development') {
+      serviceAccount = require('../8889eb754138.json');
+    }
+    console.log(1, serviceAccount)
+    if (!admin.apps.length) {
+      admin.initializeApp({
+        credential: admin.credential.cert(serviceAccount)
+      });
+    }
+  } catch (e) {
+    console.log(e)
   }
 
   let db = admin.firestore();
