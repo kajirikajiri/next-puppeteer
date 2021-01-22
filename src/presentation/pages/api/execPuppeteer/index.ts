@@ -2,7 +2,13 @@ import puppeteer from 'puppeteer'
 import admin from 'firebase-admin'
 
 export const index =(req, res) => {
-  let serviceAccount = require('../next-puppeteer-8889eb754138.json');
+  let serviceAccount
+  if (process.env.NODE_ENV === 'production') {
+    serviceAccount = JSON.parse(process.env.SERVICE_ACCOUNT)
+  } else if (process.env.NODE_ENV === 'development') {
+    serviceAccount = require('../8889eb754138.json');
+  }
+  console.log(serviceAccount)
   if (!admin.apps.length) {
     admin.initializeApp({
       credential: admin.credential.cert(serviceAccount)
