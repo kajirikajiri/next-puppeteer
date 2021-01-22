@@ -5,15 +5,19 @@ export const index =(req, res) => {
   let serviceAccount
   try {
     if (process.env.NODE_ENV === 'production') {
+      console.log('in if')
       serviceAccount = JSON.parse(process.env.SERVICE_ACCOUNT)
+      console.log('end if')
     } else if (process.env.NODE_ENV === 'development') {
       serviceAccount = require('../8889eb754138.json');
     }
     console.log(1, serviceAccount)
-    if (!admin?.apps?.length) {
+    if (!(admin?.apps?.length > 0)) {
+      console.log('start init')
       admin.initializeApp({
         credential: admin.credential.cert(serviceAccount)
       });
+      console.log('end init')
     }
   } catch (e) {
     console.log(e)
