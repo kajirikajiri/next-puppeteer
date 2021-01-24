@@ -64,7 +64,7 @@ export const Login:FC = () => {
       const a = await sendMessage({userUuid: user.uid})
     })()
     setTimeout(async()=>{
-      const a = await sendMessage({toggle: true})
+      const a = await sendMessage({closeLogin: true, openMainMenu: true})
     }, 2000)
   }
   if (loading) {
