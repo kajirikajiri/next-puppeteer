@@ -1,23 +1,13 @@
 import firebase from "firebase";
 import React, {FC, useEffect, useState } from "react";
 import { getFirebaseConfig } from "src/scripts/getFirebaseConfig";
+import { sendMessage } from "src/scripts/sendMessage";
 
 export const Login:FC = () => {
   const [email, setEmail] = useState('hogehoge@example.com')
   const [pass, setPass] = useState('password')
   const [loading, setLoading] = useState(true)
   const [isLogin, setIsLogin] = useState(undefined)
-  const sendMessage = (message) => {
-    window.parent.postMessage(message, '*')
-    return new Promise(resolve=>{
-      const callback=(event:MessageEvent<any>)=>{
-        console.log(event.data)
-        resolve(event.data)
-        window.removeEventListener('message', callback)
-      }
-      window.addEventListener('message', callback)
-    })
-  }
   // Initialize Firebase
   if (!(firebase?.apps?.length > 0)) {
     try {
