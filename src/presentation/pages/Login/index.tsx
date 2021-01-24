@@ -21,8 +21,12 @@ export const Login:FC = () => {
   }
   // Initialize Firebase
   if (!(firebase?.apps?.length > 0)) {
-    console.error(firebaseConfig)
-    firebase.initializeApp(firebaseConfig);
+    try {
+      console.error('confs', firebaseConfig)
+      firebase.initializeApp(firebaseConfig);
+    } catch(e) {
+      console.error('try err', e)
+    }
   }
   const [width, setWidth] = useState(0)
   useEffect(()=>{
