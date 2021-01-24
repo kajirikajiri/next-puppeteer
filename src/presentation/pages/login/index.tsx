@@ -23,13 +23,15 @@ export const Login:FC = () => {
       setWidth(window.innerWidth)
     }
     firebase.auth().onAuthStateChanged((user) => {
-      if (user) {
-        setIsLogin(true)
-        success(user)
-      } else {
-        setIsLogin(false)
-      }
-      setLoading(false)
+      setTimeout(()=>{
+        if (user) {
+          setIsLogin(true)
+          success(user)
+        } else {
+          setIsLogin(false)
+        }
+        setLoading(false)
+      }, 800)
     });
   }, [])
 
@@ -67,13 +69,13 @@ export const Login:FC = () => {
   }
   if (loading) {
     return (
-      <div className="container">... ログイン状態を復元しています。</div>
+      <div className="container">ログイン状態を確認中です</div>
     )
   }
 
   if (isLogin === true) {
     return (
-      <div className="container"><p>ログインしました。お待ち下さい</p></div>
+      <div className="container"><p>ログインしました<br/>少々お待ち下さい</p></div>
     )
   }
 
