@@ -1,2 +1,2 @@
-import { Login } from "src/presentation/pages/Login"
+import { Login } from "src/presentation/pages/login"
 export default Login
