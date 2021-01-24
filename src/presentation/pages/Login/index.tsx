@@ -3,7 +3,6 @@ import React, {FC, useEffect, useState } from "react";
 import { getFirebaseConfig } from "src/scripts/getFirebaseConfig";
 
 export const Login:FC = () => {
-  const firebaseConfig = getFirebaseConfig()
   const [email, setEmail] = useState('hogehoge@example.com')
   const [pass, setPass] = useState('password')
   const [loading, setLoading] = useState(true)
@@ -22,6 +21,7 @@ export const Login:FC = () => {
   // Initialize Firebase
   if (!(firebase?.apps?.length > 0)) {
     try {
+      const firebaseConfig = getFirebaseConfig()
       console.error('confs', firebaseConfig)
       firebase.initializeApp(firebaseConfig);
     } catch(e) {
