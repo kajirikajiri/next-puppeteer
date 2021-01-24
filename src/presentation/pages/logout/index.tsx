@@ -49,6 +49,6 @@ export const logout = () => {
   }
 
   return (
-    <div>{logouted ? 'ログアウトしました !':'...ログアウトしています'}</div>
+    <div>...ログアウトしています</div>
   )
 }
