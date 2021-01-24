@@ -21,7 +21,17 @@ export const logout:FC = () => {
     try {
       const firebaseConfig = getFirebaseConfig()
       firebase.initializeApp(firebaseConfig);
+      setLoading(false)
+      firebase.auth().signOut().then(()=>{
+        (async()=>{
+          const res = await sendMessage({doLogout: true})
+          console.error(res)
+        })()
+      }).catch((error)=>{
+        alert('ログアウトに失敗しました')
+      })
     } catch(e) {
+      console.error('catch error')
     }
   }
   const [width, setWidth] = useState(0)
@@ -32,22 +42,9 @@ export const logout:FC = () => {
   }, [])
 
   const handleClickLogout=async()=>{
-    firebase.auth().signOut().then(()=>{
-    }).catch((error)=>{
-      alert('ログアウトに失敗しました')
-    })
-    const res = await sendMessage({doLogout: true})
-    console.log(res)
-  }
-  if (loading) {
-    return (
-      <div>...loading</div>
-    )
   }
 
   return (
-    <button onClick={handleClickLogout}>
-      ログアウト
-    </button>
+    <div>... do logout</div>
   )
 }
