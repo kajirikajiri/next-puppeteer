@@ -1,11 +1,12 @@
 import firebase from "firebase";
-import React, {FC, useEffect, useState } from "react";
+import React, {useEffect, useState } from "react";
 import { getFirebaseConfig } from "src/scripts/getFirebaseConfig";
 import { sendMessage } from "src/scripts/sendMessage";
 
-export const logout:FC = () => {
+export const logout = () => {
   const [loadedFirebaseConfig, setLoadedFirebaseConfig] = useState(false)
   const [width, setWidth] = useState(0)
+  const [logouted, setLogouted] = useState(false)
   // Initialize Firebase
   if (!(firebase?.apps?.length > 0)) {
     try {
@@ -25,7 +26,7 @@ export const logout:FC = () => {
       firebase.auth().signOut().then(()=>{
         (async()=>{
           const res = await sendMessage({doLogout: true})
-          console.error(res)
+          setLogouted(true)
         })()
       }).catch((error)=>{
         alert('ログアウトに失敗しました')
@@ -34,6 +35,6 @@ export const logout:FC = () => {
   }, [width])
 
   return (
-    <div>... do logout</div>
+    <div>{logouted ? 'ログアウトしました !':'...ログアウトしています'}</div>
   )
 }

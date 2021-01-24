@@ -8,6 +8,7 @@ export const Login:FC = () => {
   const [pass, setPass] = useState('password')
   const [loading, setLoading] = useState(true)
   const [isLogin, setIsLogin] = useState(undefined)
+  const [width, setWidth] = useState(0)
   // Initialize Firebase
   if (!(firebase?.apps?.length > 0)) {
     try {
@@ -16,7 +17,6 @@ export const Login:FC = () => {
     } catch(e) {
     }
   }
-  const [width, setWidth] = useState(0)
   useEffect(()=>{
     window.onresize = ()=>{
       setWidth(window.innerWidth)
@@ -39,7 +39,7 @@ export const Login:FC = () => {
     });
   }, [])
 
-  const handleClick=(type:'login'|'signup'|'re')=>{
+  const handleClick=(type:'login'|'signup')=>{
     if (type === 'login') {
       firebase.auth().signInWithEmailAndPassword(email, pass)
         .then(({user}) => {
@@ -52,35 +52,16 @@ export const Login:FC = () => {
           }, 2000)
           })
         .catch((error) => {
-          var errorCode = error.code;
-          var errorMessage = error.message;
         });
     } else if(type==="signup") {
       firebase.auth().createUserWithEmailAndPassword(email, pass)
         .then((user) => {
           console.log('signup')
           console.log(user)
-          // Signed in
-          // ...
         })
         .catch((error) => {
           console.log(error)
-          var errorCode = error.code;
-          var errorMessage = error.message;
-          // ..
         });
-      } else if (type === 're') {
-          firebase.auth().setPersistence(firebase.auth.Auth.Persistence.LOCAL).then(()=>{
-    const provider = new firebase.auth.GoogleAuthProvider();
-    console.log(provider)
-    // return firebase.auth().signInWithEmailAndPassword(provider).then((user)=>{
-    //   console.log(user)
-    // })
-  }).catch((error) => {
-    console.log(error)
-    var errorCode = error.code;
-    var errorMessage = error.message;
-  })
       }
   }
   if (loading) {
