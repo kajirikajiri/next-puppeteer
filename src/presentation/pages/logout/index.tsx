@@ -7,6 +7,7 @@ export const logout = () => {
   const [loadedFirebaseConfig, setLoadedFirebaseConfig] = useState(false)
   const [width, setWidth] = useState(0)
   const [logouted, setLogouted] = useState(false)
+  const [logoutFailed, setLogoutFailed] = useState(false)
   // Initialize Firebase
   if (!(firebase?.apps?.length > 0)) {
     try {
@@ -25,14 +26,27 @@ export const logout = () => {
     if (width > 0 && loadedFirebaseConfig === true) {
       firebase.auth().signOut().then(()=>{
         (async()=>{
-          const res = await sendMessage({doLogout: true})
+          const res = await sendMessage({logouted: true})
           setLogouted(true)
         })()
-      }).catch((error)=>{
-        alert('ログアウトに失敗しました')
+      }).catch(async(error)=>{
+        const res = await sendMessage({logoutFailed: true})
+        setLogoutFailed(true)
       })
     }
   }, [width])
+
+  if (logouted) {
+    return (
+    <div>ログアウトしました !<br/>まもなくcloseします</div>
+    )
+  }
+
+  if (logoutFailed) {
+    return (
+      <div>ログアウト失敗です。<br/>元の画面に戻ります。<br/>しばらくしてから<br/>再度お願いします</div>
+    )
+  }
 
   return (
     <div>{logouted ? 'ログアウトしました !':'...ログアウトしています'}</div>
