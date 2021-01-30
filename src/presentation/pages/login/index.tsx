@@ -23,15 +23,13 @@ export const Login:FC = () => {
       setWidth(window.innerWidth)
     }
     firebase.auth().onAuthStateChanged((user) => {
-      setTimeout(()=>{
-        if (user) {
-          setIsLogin(true)
-          success(user)
-        } else {
-          setIsLogin(false)
-        }
-        setLoading(false)
-      }, 800)
+      if (user) {
+        setIsLogin(true)
+        success(user)
+      } else {
+        setIsLogin(false)
+      }
+      setLoading(false)
     });
   }, [])
 
@@ -65,7 +63,7 @@ export const Login:FC = () => {
     })()
     setTimeout(async()=>{
       const a = await sendMessage({closeLogin: true, openMainMenu: true})
-    }, 2000)
+    }, 300)
   }
   if (loading) {
     return (
